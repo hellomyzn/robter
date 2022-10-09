@@ -11,6 +11,12 @@ $ docker-compose up -d --build
 $ docker-compose down
 ```
 
+### Installation
+```
+$ pip install -r requirements.txt 
+```
+
+
 ### Into to container
 ```
 # python3 server
