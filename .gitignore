@@ -3,3 +3,4 @@
 *.python_history
 *.DS_Store
 *.cache
+backend/logs/*
