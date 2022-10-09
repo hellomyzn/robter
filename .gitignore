@@ -3,4 +3,6 @@
 *.python_history
 *.DS_Store
 *.cache
+*__pycache__
 backend/logs/*
+backend/.env
