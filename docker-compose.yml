@@ -1,10 +1,40 @@
-version: '3'
+version: '3.9'
+volumes:
+  db-store:
 services:
   python3:
+    container_name: 'roboter'
     restart: always
     build: ./infra/python/
-    container_name: 'roboter'
     working_dir: '/root/'
     tty: true
     volumes:
       - ./backend/:/root
+
+  db:
+    build:
+      context: .
+      dockerfile: ./infra/mysql/Dockerfile
+    ports:
+      - target: 3306
+        published: ${DB_PORT:-3306}
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: volume
+        source: db-store
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+    environment:
+      - MYSQL_DATABASE=${DB_NAME:-roboter}
+      - MYSQL_USER=${DB_USER:-pythonista}
+      - MYSQL_PASSWORD=${DB_PASS:-secret}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 8888:80
+    depends_on:
+      - db

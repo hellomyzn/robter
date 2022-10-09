@@ -19,6 +19,8 @@ logs:
 	docker-compose logs
 python:
 	docker-compose exec python3 bash
+db:
+	docker-compose exec db bash
 start:
 	@make up
 
